@@ -37,7 +37,7 @@ app.use('/', indexRouter);
 app.use('/manager', managerRouter); 
 app.use('/order', orderRouter); 
 app.use('/product', productRouter); 
-app.use('/product', restaurantRouter); 
+app.use('/restaurant', restaurantRouter); 
 
 
 // catch 404 and forward to error handler
