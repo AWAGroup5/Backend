@@ -15,7 +15,7 @@ var managerRouter = require ('./routes/manager');
 
 var app = express(); 
 app.get('/', (req, res) => {
-  res.send('Food Ordering API!')
+  res.send('Food App API!')
 })
 
 app.listen(port, () => {
