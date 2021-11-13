@@ -1,28 +1,28 @@
 const db = require('../database');
 
-const users = {
+const orders = {
   get: function(callback) {
-    return db.query('select * from users', callback);
+    return db.query('select * idorder', callback); //Select all orders based on ID 
   },
   getById: function(id, callback) {
-    return db.query('select * from Users where idUsers=?', [id], callback);
+    return db.query('select * from orders where idorder=?', [id], callback); //selec the order specifically based on ID 
   },
-  add: function(users, callback) {
+  add: function(orders, callback) {
     return db.query(
-      'insert into Users (idUsers,FirstName_User,Country_User,Email_User,SecondName_User) values(?,?,?,?,?)',
-      [users.idUsers, users.FirstName_User, users.Country_User, users.Email_User, users.SecondName_User],
+      'insert into orders (idorder,idcustomer,status,cost,idrestaurant) values(?,?,?,?,?)',  //Adding a new order with needed information 
+      [orders.idorder, orders.idcustomer, orders.status, orders.cost, orders.idrestaurant],
       callback
     );
   },
   delete: function(id, callback) {
-    return db.query('delete from Users where idUsers=?', [id], callback);
+    return db.query('delete from orders where idorder=?', [id], callback); //delete the order based on the ID 
   },
-  update: function(id, users, callback) {
+  update: function(id, orders, callback) {   //updating an order based on its ID 
     return db.query(
-      'update Users set FirstName_User=?,Country_User=?, Email_User=?, SecondName_User=?, where idUsers=?',
-      [users.idUsers, users.FirstName_User, users.Country_User, users.Email_User, users.SecondName_User, id],
+      'update orders set idrestaurant=?,idcustomer=?, status=?, cost=?, where idorder=?', 
+      [orders.idrestaurant, orders.idcustomer, orders.status, orders.cost, id],
       callback
     );
   }
 };
-module.exports = users;
+module.exports = orders;

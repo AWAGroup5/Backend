@@ -5,5 +5,5 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Food App API' });
 });
-
+//Retaurants information first frontend page
 module.exports = router;

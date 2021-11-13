@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const stocks = require('../models/manager_model');
 
+
 router.get('/:id?',
  function(request, response) {
   if (request.params.id) {
