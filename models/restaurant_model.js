@@ -2,25 +2,27 @@ const db = require('../database');
 
 const users = {
   get: function(callback) {
-    return db.query('select * from users', callback);
+    return db.query('select * from idrestaurant', callback);
   },
   getById: function(id, callback) {
-    return db.query('select * from Users where idUsers=?', [id], callback);
+    return db.query('select * from name where idrestaurant=?', [id], callback); //to select a Name based on the restaurant ID
   },
-  add: function(users, callback) {
+  add: function(users, callback) {  //Adding a new restaurant 
     return db.query(
-      'insert into Users (idUsers,FirstName_User,Country_User,Email_User,SecondName_User) values(?,?,?,?,?)',
-      [users.idUsers, users.FirstName_User, users.Country_User, users.Email_User, users.SecondName_User],
+      'insert into restaurant (idrestaurant,idmanager,name,type,openInfo,priceLevel) values(?,?,?,?,?,?)',
+      [users.idrestaurant, users.idmanager, users.name, users.type, users.openInfo, users.priceLevel],
       callback
     );
   },
   delete: function(id, callback) {
-    return db.query('delete from Users where idUsers=?', [id], callback);
+    return db.query('delete from restaurant where idrestaurant=?', [id], callback); //Delete a restaurant 
   },
-  update: function(id, users, callback) {
+  
+  
+  update: function(id, users, callback) { //updating a restaurant based on ID 
     return db.query(
-      'update Users set FirstName_User=?,Country_User=?, Email_User=?, SecondName_User=?, where idUsers=?',
-      [users.idUsers, users.FirstName_User, users.Country_User, users.Email_User, users.SecondName_User, id],
+      'update Users set idrestaurant=?,idmanager=?, name=?, type=?, openInfo=?, priceLevel=?, where idrestaurant=?',
+      [users.idrestaurant, users.idmanager, users.name, users.type, users.openInfo, users.priceLevel, id],
       callback
     );
   }
