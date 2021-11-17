@@ -4,7 +4,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var port = "3000"; 
+var port = "4000"; 
+var tempData = require('./restaurantdata.json');
 
 var indexRouter = require ('./routes/index');
 var restaurantRouter = require ('./routes/restaurant');
@@ -12,10 +13,18 @@ var orderRouter = require ('./routes/order');
 var productRouter = require ('./routes/product');
 var managerRouter = require ('./routes/manager');
 
-
 var app = express(); 
+const cors = require("cors")
+app.use(cors({
+  origin: 'http://localhost:3000'
+}))
+
 app.get('/', (req, res) => {
   res.send('Food App API!')
+})
+
+app.get("/restaurants", (req, res) => {
+  res.json(tempData.data)
 })
 
 app.listen(port, () => {
@@ -53,7 +62,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  //res.render('error');
 });
 
 module.exports = app;
