@@ -12,6 +12,7 @@ var restaurantRouter = require ('./routes/restaurant');
 var orderRouter = require ('./routes/order');
 var productRouter = require ('./routes/product');
 var managerRouter = require ('./routes/manager');
+var customerRouter = require ('./routes/customer');
 
 var app = express(); 
 const cors = require("cors")
@@ -47,6 +48,7 @@ app.use('/manager', managerRouter);
 app.use('/order', orderRouter); 
 app.use('/product', productRouter); 
 app.use('/restaurant', restaurantRouter); 
+app.use('/customer', customerRouter); 
 
 
 // catch 404 and forward to error handler
