@@ -1,4 +1,4 @@
-//Execute this with node.index in node.js
+//Execute this with node index in node.js
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -17,7 +17,7 @@ var customerRouter = require ('./routes/customer');
 var app = express(); 
 const cors = require("cors")
 app.use(cors({
-  origin: 'http://localhost:3000'
+  origin: 'https://awaproject5db.herokuapp.com/'
 }))
 
 app.get('/', (req, res) => {
