@@ -8,6 +8,7 @@ var cloudinary = require('cloudinary');
 var multer = require('multer');
 var { CloudinaryStorage } = require('multer-storage-cloudinary');
 var tempData = require('./restaurantdata.json');
+var PORT = (process.env.PORT || 80);
 
 var indexRouter = require ('./routes/index');
 var restaurantRouter = require ('./routes/restaurant');
@@ -23,8 +24,6 @@ var storage = new CloudinaryStorage ({
 });
 
 var parser = multer({ storage: storage });
-
-app.set('port', (process.env.PORT || 80));
 
 var app = express(); 
 const cors = require("cors")
@@ -46,8 +45,8 @@ app.get("/restaurants", (req, res) => {
   res.json(tempData.data)
 })
 
-app.listen(app.get('port'), () => {
-  console.log('Example app listening at' ,app.get('port'));
+app.listen(PORT, () => {
+  console.log('Example app listening at' ,PORT);
 })
 
 
