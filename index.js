@@ -5,6 +5,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var port = "4000"; 
+var cloudinary = require('cloudinary');
+var multer = require('multer');
+var cloudinaryStorage = require('multer-storage-cloudinary');
 var tempData = require('./restaurantdata.json');
 
 var indexRouter = require ('./routes/index');
@@ -13,6 +16,14 @@ var orderRouter = require ('./routes/order');
 var productRouter = require ('./routes/product');
 var managerRouter = require ('./routes/manager');
 var customerRouter = require ('./routes/customer');
+
+var storage = cloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: '',
+  allowedFormats: ['jpeg', 'png']
+});
+
+var parser = multer({ storage: storage });
 
 var app = express(); 
 const cors = require("cors")
@@ -23,6 +34,12 @@ app.use(cors({
 app.get('/', (req, res) => {
   res.send('Food App API!')
 })
+
+app.post('/upload', parser.single('image'), function (res, req) {
+  console-log(req.file);
+  res.status(201);
+  res.json(req.file);
+});
 
 app.get("/restaurants", (req, res) => {
   res.json(tempData.data)
