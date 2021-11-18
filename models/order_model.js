@@ -2,7 +2,7 @@ const db = require('../database');
 
 const orders = {
   get: function(callback) {
-    return db.query('select * idorder', callback); //Select all orders based on ID 
+    return db.query('select * orders', callback); //Select all orders based on ID 
   },
   getById: function(id, callback) {
     return db.query('select * from orders where idorder=?', [id], callback); //selec the order specifically based on ID 
