@@ -17,13 +17,15 @@ var productRouter = require ('./routes/product');
 var managerRouter = require ('./routes/manager');
 var customerRouter = require ('./routes/customer');
 
-var storage = cloudinaryStorage({
+var storage = cloudinaryStorage ({
   cloudinary: cloudinary,
   folder: '',
   allowedFormats: ['jpeg', 'png']
 });
 
 var parser = multer({ storage: storage });
+
+app.set('port', (process.env.PORT || 80));
 
 var app = express(); 
 const cors = require("cors")
@@ -45,8 +47,8 @@ app.get("/restaurants", (req, res) => {
   res.json(tempData.data)
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+app.listen(app.get('port'), () => {
+  console.log('Example app listening at' ,app.get('port'));
 })
 
 
