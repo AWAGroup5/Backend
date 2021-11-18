@@ -17,7 +17,7 @@ var customerRouter = require ('./routes/customer');
 var app = express(); 
 const cors = require("cors")
 app.use(cors({
-  origin: 'https://awaproject5.herokuapp.com/'
+  origin: '*'
 }))
 
 app.get('/', (req, res) => {
