@@ -2,25 +2,25 @@ const db = require('../database');
 
 const users = {
   get: function(callback) {
-    return db.query('select * from users', callback);
+    return db.query('select * from product', callback);
   },
   getById: function(id, callback) {
-    return db.query('select * from Users where idUsers=?', [id], callback);
+    return db.query('select * from product where idUsers=?', [id], callback); //Select a product based on the ID
   },
   add: function(users, callback) {
     return db.query(
-      'insert into Users (idUsers,FirstName_User,Country_User,Email_User,SecondName_User) values(?,?,?,?,?)',
-      [users.idUsers, users.FirstName_User, users.Country_User, users.Email_User, users.SecondName_User],
+      'insert into product (idproduct,idcategory,name,description,price) values(?,?,?,?,?)',
+      [users.idproduct, users.idcategory, users.name, users.description, users.price],
       callback
     );
   },
-  delete: function(id, callback) {
-    return db.query('delete from Users where idUsers=?', [id], callback);
+  delete: function(id, callback) { //delete a product based on the ID
+    return db.query('delete from Users where idproduct=?', [id], callback);
   },
-  update: function(id, users, callback) {
-    return db.query(
-      'update Users set FirstName_User=?,Country_User=?, Email_User=?, SecondName_User=?, where idUsers=?',
-      [users.idUsers, users.FirstName_User, users.Country_User, users.Email_User, users.SecondName_User, id],
+  update: function(id, users, callback) {  //update product information
+    return db.query( 
+      'update product set name=?,description=?, price=?, where idUsers=?',
+      [users.name, users.description, users.price, id],
       callback
     );
   }
