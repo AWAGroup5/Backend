@@ -4,10 +4,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var port = process.env.PORT || "4000"; 
 var cloudinary = require('cloudinary');
 var multer = require('multer');
-var cloudinaryStorage = require('multer-storage-cloudinary');
+var { CloudinaryStorage } = require('multer-storage-cloudinary');
 var tempData = require('./restaurantdata.json');
 
 var indexRouter = require ('./routes/index');
@@ -17,7 +16,7 @@ var productRouter = require ('./routes/product');
 var managerRouter = require ('./routes/manager');
 var customerRouter = require ('./routes/customer');
 
-var storage = cloudinaryStorage ({
+var storage = new CloudinaryStorage ({
   cloudinary: cloudinary,
   folder: '',
   allowedFormats: ['jpeg', 'png']
