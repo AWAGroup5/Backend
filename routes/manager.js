@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const stocks = require('../models/manager_model');
-
+const manager = require('../models/manager_model');
+const bcrypt = require('bcrypt');
 
 router.get('/:id?',
  function(request, response) {
   if (request.params.id) {
-    stocks.getById(request.params.id, function(err, dbResult) {
+    manager.getById(request.params.id, function(err, dbResult) {
       if (err) {
         response.json(err);
       } else {
@@ -15,7 +15,7 @@ router.get('/:id?',
       }
     });
   } else {
-    stocks.get(function(err, dbResult) {
+    manager.get(function(err, dbResult) {
       if (err) {
         response.json(err);
       } else {
@@ -26,22 +26,36 @@ router.get('/:id?',
 });
 
 
-router.post('/', 
-function(request, response) {
-  stocks.add(request.body, function(err, dbResult) {
+router.post('/register', (req, res) => {
+  if('username' in req.body == false ) {
+    res.status(400);
+    res.json({status: "Missing username from body"})
+    return;
+  }
+  if('password' in req.body == false ) {
+    res.status(400);
+    res.json({status: "Missing password from body"})
+    return;
+  }
+  console.log(req.body.password);
+  const salt = bcrypt.genSaltSync(6);
+  const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+  console.log(hashedPassword);
+  const newBody = { username: req.body.username , password: hashedPassword}
+  manager.add(newBody, function(err, dbResult) {
     if (err) {
-      response.json(err);
+      res.json(err);
     } else {
       console.log(dbResult);
-      response.json(dbResult);
     }
   });
+  res.status(201).json({ status: "created" });
 });
 
 
 router.delete('/:id', 
 function(request, response) {
-  stocks.delete(request.params.id, function(err, dbResult) {
+  manager.delete(request.params.id, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
@@ -53,7 +67,7 @@ function(request, response) {
 
 router.put('/:id', 
 function(request, response) {
-  stocks.update(request.params.id, request.body, function(err, dbResult) {
+  manager.update(request.params.id, request.body, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {

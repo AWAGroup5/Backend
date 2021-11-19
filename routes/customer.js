@@ -1,63 +1,79 @@
 const express = require('express');
 const router = express.Router();
-const stocks = require('../models/customer_model');
+const customer = require('../models/customer_model');
+const bcrypt = require('bcrypt');
 
 
 router.get('/:id?',
- function(request, response) {
-  if (request.params.id) {
-    stocks.getById(request.params.id, function(err, dbResult) {
+ function(req, res) {
+  if (req.params.id) {
+    customer.getById(req.params.id, function(err, dbResult) {
       if (err) {
-        response.json(err);
+        res.json(err);
+        res.send("No user on that id")
       } else {
         console.log(dbResult[0]);
-        response.json(dbResult[0]);
+        res.json(dbResult[0]);
       }
     });
   } else {
-    stocks.get(function(err, dbResult) {
+    customer.get(function(err, dbResult) {
       if (err) {
-        response.json(err);
+        res.json(err);
       } else {
-        response.json(dbResult);
+        res.json(dbResult);
       }
     });
   }
 });
 
 
-router.post('/', 
-function(request, response) {
-  stocks.add(request.body, function(err, dbResult) {
+router.post('/register', (req, res) => {
+  if('username' in req.body == false ) {
+    res.status(400);
+    res.json({status: "Missing username from body"})
+    return;
+  }
+  if('password' in req.body == false ) {
+    res.status(400);
+    res.json({status: "Missing password from body"})
+    return;
+  }
+  console.log(req.body.password);
+  const salt = bcrypt.genSaltSync(6);
+  const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+  console.log(hashedPassword);
+  const newBody = { username: req.body.username , password: hashedPassword}
+  customer.add(newBody, function(err, dbResult) {
     if (err) {
-      response.json(err);
+      res.json(err);
     } else {
       console.log(dbResult);
-      response.json(dbResult);
     }
   });
+  res.status(201).json({ status: "created" });
 });
 
 
 router.delete('/:id', 
-function(request, response) {
-  stocks.delete(request.params.id, function(err, dbResult) {
+function(req, res) {
+  customer.delete(req.params.id, function(err, dbResult) {
     if (err) {
-      response.json(err);
+      res.json(err);
     } else {
-      response.json(dbResult.affectedRows);
+      res.json(dbResult.affectedRows);
     }
   });
 });
 
 
 router.put('/:id', 
-function(request, response) {
-  stocks.update(request.params.id, request.body, function(err, dbResult) {
+function(req, res) {
+  customer.update(req.params.id, req.body, function(err, dbResult) {
     if (err) {
-      response.json(err);
+      res.json(err);
     } else {
-      response.json(dbResult);
+      res.json(dbResult);
     }
   });
 });

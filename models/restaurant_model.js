@@ -1,16 +1,16 @@
 const db = require('../database');
 
-const users = {
+const restaurant = {
   get: function(callback) {
     return db.query('select * from restaurant', callback);
   },
   getById: function(id, callback) {
     return db.query('select * from restaurant where idrestaurant=?', [id], callback); //to select a Name based on the restaurant ID
   },
-  add: function(users, callback) {  //Adding a new restaurant 
+  add: function(restaurant, callback) {  //Adding a new restaurant 
     return db.query(
       'insert into restaurant (idrestaurant,idmanager,name,type,openInfo,priceLevel) values(?,?,?,?,?,?)',
-      [users.idrestaurant, users.idmanager, users.name, users.type, users.openInfo, users.priceLevel],
+      [null, restaurant.idmanager, restaurant.name, restaurant.type, restaurant.openInfo, restaurant.priceLevel],
       callback
     );
   },
@@ -19,12 +19,12 @@ const users = {
   },
   
   
-  update: function(id, users, callback) { //updating a restaurant based on ID 
+  update: function(id, restaurant, callback) { //updating a restaurant based on ID 
     return db.query(
       'update restaurant set idrestaurant=?,idmanager=?, name=?, type=?, openInfo=?, priceLevel=?, where idrestaurant=?',
-      [users.idrestaurant, users.idmanager, users.name, users.type, users.openInfo, users.priceLevel, id],
+      [restaurant.idrestaurant, restaurant.idmanager, restaurant.name, restaurant.type, restaurant.openInfo, restaurant.priceLevel, id],
       callback
     );
   }
 };
-module.exports = users;
+module.exports = restaurant;
