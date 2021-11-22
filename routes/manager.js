@@ -37,10 +37,8 @@ router.post('/register', (req, res) => {
     res.json({status: "Missing password from body"})
     return;
   }
-  console.log(req.body.password);
   const salt = bcrypt.genSaltSync(6);
   const hashedPassword = bcrypt.hashSync(req.body.password, salt);
-  console.log(hashedPassword);
   const newBody = { username: req.body.username , password: hashedPassword}
   manager.add(newBody, function(err, dbResult) {
     if (err) {

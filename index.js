@@ -12,14 +12,17 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const BasicStrategy = require('passport-http').BasicStrategy;
+require("./routes/login")(passport);
 
 var app = express(); 
+app.use(passport.initialize());
 var indexRouter = require ('./routes/index');
 var restaurantRouter = require ('./routes/restaurant');
 var orderRouter = require ('./routes/order');
 var productRouter = require ('./routes/product');
 var managerRouter = require ('./routes/manager');
 var customerRouter = require ('./routes/customer');
+var loginRouter = require ('./routes/login');
 
 var PORT = (process.env.PORT || 80);
 
@@ -42,27 +45,8 @@ app.listen(PORT, () => {
   console.log('Example app listening at' ,PORT);
 })
 
-//LOGIN SYSTEM
-passport.use(new BasicStrategy(
-  function(username, password, done) {
 
-    const user = users.getUserByName(username);   //Need to fetch this from database
-    if(user == undefined) {
-      // Username not found
-      console.log("HTTP Basic username not found");
-      return done(null, false, { message: "HTTP Basic username not found" });
-    }
-
-    /* Verify password match */
-    if(bcrypt.compareSync(password, user.password) == false) {
-      // Password does not match
-      console.log("HTTP Basic password not matching username");
-      return done(null, false, { message: "HTTP Basic password not found" });
-    }
-    return done(null, user);
-  }
-));
-
+//EXAMPLE FOR PROTECTED ADDRESS
 app.get('/httpBasicProtectedResource',
         passport.authenticate('basic', { session: false }),
         (req, res) => {
@@ -91,7 +75,8 @@ app.use('/customer', customerRouter);
 app.use('/manager', managerRouter);
 app.use('/restaurant', restaurantRouter);
 app.use('/order', orderRouter); 
-app.use('/product', productRouter); 
+app.use('/product', productRouter);
+app.use('/login', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

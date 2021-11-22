@@ -1,0 +1,2 @@
+https://awaproject5db.herokuapp.com/customer/register      Customer registeration
+https://awaproject5db.herokuapp.com/manager/register       Manager registeration

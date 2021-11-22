@@ -3,7 +3,6 @@ const router = express.Router();
 const customer = require('../models/customer_model');
 const bcrypt = require('bcrypt');
 
-
 router.get('/:id?',
  function(req, res) {
   if (req.params.id) {

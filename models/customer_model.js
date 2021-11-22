@@ -7,6 +7,9 @@ const users = {
   getById: function(id, callback) {
     return db.query('select * from customer where idcustomer=?', [id], callback); //To search within the users based on the ID
   },
+  getByName: function(username, callback) {
+    return db.query('select * from customer where username=?', [username], callback); //To search within the users based on the username
+  },
   add: function(users, callback) {
     return db.query(
       'insert into customer (idcustomer, username, password) values(?,?,?)',

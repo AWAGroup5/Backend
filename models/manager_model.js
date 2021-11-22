@@ -7,6 +7,9 @@ const managers = {
   getById: function(id, callback) {
     return db.query('select * from manager where idmanager=?', [id], callback); //To search within the managers based on the ID
   },
+  getByName: function(username, callback) {
+    return db.query('select * from manager where username=?', [username], callback); //To search within the managers based on the username
+  },
   add: function(managers, callback) {
     return db.query(
       'insert into manager (idmanager,userName,password) values(?,?,?)',
