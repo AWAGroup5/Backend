@@ -7,8 +7,13 @@ var logger = require('morgan');
 var cloudinary = require('cloudinary');
 var multer = require('multer');
 var { CloudinaryStorage } = require('multer-storage-cloudinary');
-var tempData = require('./restaurantdata.json');
-var PORT = (process.env.PORT || 80);
+const cors = require("cors");
+const bodyParser = require('body-parser');
+const passport = require('passport');
+require("./passport")(passport);
+
+var app = express(); 
+app.use(passport.initialize());
 
 var indexRouter = require ('./routes/index');
 var restaurantRouter = require ('./routes/restaurant');
@@ -16,6 +21,9 @@ var orderRouter = require ('./routes/order');
 var productRouter = require ('./routes/product');
 var managerRouter = require ('./routes/manager');
 var customerRouter = require ('./routes/customer');
+var loginRouter = require('./routes/login');
+
+var PORT = (process.env.PORT || 80);
 
 var storage = new CloudinaryStorage ({
   cloudinary: cloudinary,
@@ -25,25 +33,12 @@ var storage = new CloudinaryStorage ({
 
 var parser = multer({ storage: storage });
 
-var app = express(); 
-const cors = require("cors")
-app.use(cors({
-  origin: '*'
-}))
-
-app.get('/', (req, res) => {
-  res.send('Food App API!')
-})
 
 app.post('/upload', parser.single('image'), function (res, req) {
   console-log(req.file);
   res.status(201);
   res.json(req.file);
 });
-
-app.get("/restaurants", (req, res) => {
-  res.json(tempData.data)
-})
 
 app.listen(PORT, () => {
   console.log('Example app listening at' ,PORT);
@@ -59,14 +54,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
+app.use(cors({ origin: '*' }))
 
-app.use('/', indexRouter); 
-app.use('/manager', managerRouter); 
+app.use('/', indexRouter);
+app.use('/customer', customerRouter);
+app.use('/manager', managerRouter);
+app.use('/restaurant', restaurantRouter);
 app.use('/order', orderRouter); 
-app.use('/product', productRouter); 
-app.use('/restaurant', restaurantRouter); 
-app.use('/customer', customerRouter); 
-
+app.use('/product', productRouter);
+app.use('/login', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
