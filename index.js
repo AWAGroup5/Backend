@@ -9,20 +9,19 @@ var multer = require('multer');
 var { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cors = require("cors");
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
 const passport = require('passport');
-const BasicStrategy = require('passport-http').BasicStrategy;
-require("./routes/login")(passport);
+require("./passport")(passport);
 
 var app = express(); 
 app.use(passport.initialize());
+
 var indexRouter = require ('./routes/index');
 var restaurantRouter = require ('./routes/restaurant');
 var orderRouter = require ('./routes/order');
 var productRouter = require ('./routes/product');
 var managerRouter = require ('./routes/manager');
 var customerRouter = require ('./routes/customer');
-var loginRouter = require ('./routes/login');
+var loginRouter = require('./routes/login');
 
 var PORT = (process.env.PORT || 80);
 
@@ -44,18 +43,6 @@ app.post('/upload', parser.single('image'), function (res, req) {
 app.listen(PORT, () => {
   console.log('Example app listening at' ,PORT);
 })
-
-
-//EXAMPLE FOR PROTECTED ADDRESS
-app.get('/httpBasicProtectedResource',
-        passport.authenticate('basic', { session: false }),
-        (req, res) => {
-  res.json({
-    yourProtectedResource: "profit"
-  });
-});
-
-//JWT AUTH
 
 
 // view engine setup
