@@ -1,28 +1,28 @@
 const db = require('../database');
 
-const users = {
+const product = {
   get: function(callback) {
     return db.query('select * from product', callback);
   },
   getById: function(id, callback) {
-    return db.query('select * from product where idUsers=?', [id], callback); //Select a product based on the ID
+    return db.query('select * from product where idproduct=?', [id], callback); //Select a product based on the ID
   },
-  add: function(users, callback) {
+  add: function(product, callback) {
     return db.query(
       'insert into product (idproduct,idcategory,name,description,price) values(?,?,?,?,?)',
-      [users.idproduct, users.idcategory, users.name, users.description, users.price],
+      [null, product.idcategory, product.name, product.description, product.price],
       callback
     );
   },
   delete: function(id, callback) { //delete a product based on the ID
-    return db.query('delete from Users where idproduct=?', [id], callback);
+    return db.query('delete from product where idproduct=?', [id], callback);
   },
-  update: function(id, users, callback) {  //update product information
+  update: function(id, product, callback) {  //update product information
     return db.query( 
-      'update product set name=?,description=?, price=?, where idUsers=?',
-      [users.name, users.description, users.price, id],
+      'update product set name=?,description=?, price=?, where idproduct=?',
+      [product.name, product.description, product.price, id],
       callback
     );
   }
 };
-module.exports = users;
+module.exports = product;
