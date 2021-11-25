@@ -22,6 +22,7 @@ var productRouter = require ('./routes/product');
 var managerRouter = require ('./routes/manager');
 var customerRouter = require ('./routes/customer');
 var loginRouter = require('./routes/login');
+var categoryRouter = require('./routes/category');
 
 var PORT = (process.env.PORT || 80);
 
@@ -34,8 +35,8 @@ var storage = new CloudinaryStorage ({
 var parser = multer({ storage: storage });
 
 
-app.post('/upload', parser.single('image'), function (res, req) {
-  console-log(req.file);
+app.post('/upload', parser.single('image'), function (req, res) {
+  console.log(req.file);
   res.status(201);
   res.json(req.file);
 });
@@ -64,6 +65,7 @@ app.use('/restaurant', restaurantRouter);
 app.use('/order', orderRouter); 
 app.use('/product', productRouter);
 app.use('/login', loginRouter);
+app.use('/category', categoryRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

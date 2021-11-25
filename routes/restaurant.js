@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const stocks = require('../models/restaurant_model');
+const restaurant = require('../models/restaurant_model');
 
 router.get('/:id?',
  function(request, response) {
   if (request.params.id) {
-    stocks.getById(request.params.id, function(err, dbResult) {
+    restaurant.getById(request.params.id, function(err, dbResult) {
       if (err) {
         response.json(err);
       } else {
@@ -14,7 +14,7 @@ router.get('/:id?',
       }
     });
   } else {
-    stocks.get(function(err, dbResult) {
+    restaurant.get(function(err, dbResult) {
       if (err) {
         response.json(err);
       } else {
@@ -27,7 +27,7 @@ router.get('/:id?',
 
 router.post('/', 
 function(request, response) {
-  stocks.add(request.body, function(err, dbResult) {
+  restaurant.add(request.body, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
@@ -40,7 +40,7 @@ function(request, response) {
 
 router.delete('/:id', 
 function(request, response) {
-  stocks.delete(request.params.id, function(err, dbResult) {
+  restaurant.delete(request.params.id, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
@@ -52,7 +52,7 @@ function(request, response) {
 
 router.put('/:id', 
 function(request, response) {
-  stocks.update(request.params.id, request.body, function(err, dbResult) {
+  restaurant.update(request.params.id, request.body, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
