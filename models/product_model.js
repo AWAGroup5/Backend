@@ -4,8 +4,12 @@ const product = {
   get: function(callback) {
     return db.query('select * from product', callback);
   },
+
   getById: function(id, callback) {
     return db.query('select * from product where idproduct=?', [id], callback); //Select a product based on the ID
+  },
+  getByName: function(name, callback) {
+    return db.query('select * from product where name=?', [name], callback); //Select a product based on the name
   },
   add: function(product, callback) {
     return db.query(

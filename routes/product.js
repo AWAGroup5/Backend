@@ -2,26 +2,17 @@ const express = require('express');
 const router = express.Router();
 const product = require('../models/product_model');
 
-router.get('/:id?',
- function(request, response) {
-  if (request.params.id) {
-    product.getById(request.params.id, function(err, dbResult) {
+router.get('/',
+  function(request, response) {
+    var name = request.query.name;
+    product.getByName(name, function(err, dbResult) {
       if (err) {
         response.json(err);
       } else {
         console.log(dbResult[0]);
         response.json(dbResult[0]);
       }
-    });
-  } else {
-    product.get(function(err, dbResult) {
-      if (err) {
-        response.json(err);
-      } else {
-        response.json(dbResult);
-      }
-    });
-  }
+    }); 
 });
 
 
