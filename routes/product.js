@@ -4,8 +4,8 @@ const product = require('../models/product_model');
 
 router.get('/',
   function(request, response) {
-    var name = request.query.name;
-    product.getByName(name, function(err, dbResult) {
+    var id = request.query.id;
+    product.getByName(id, function(err, dbResult) {
       if (err) {
         response.json(err);
       } else {
