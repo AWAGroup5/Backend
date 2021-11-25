@@ -5,7 +5,7 @@ const category = {
     return db.query('select * from category', callback);
   },
   getById: function(id, callback) {
-    return db.query('select * from category where idcategory=?', [id], callback); //Select a category based on the ID
+    return db.query('select * from category where idrestaurant=?', [id], callback); //Select categories based on the restaurantID
   },
   add: function(category, callback) {
     return db.query(

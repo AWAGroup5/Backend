@@ -2,9 +2,18 @@ const express = require('express');
 const router = express.Router();
 const restaurant = require('../models/restaurant_model');
 
-router.get('/:id?',
- function(request, response) {
-  if (request.params.id) {
+router.get('/', function(req, res) {
+  restaurant.get(function(err, dbResult) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(dbResult);
+    }
+  });
+})
+
+router.get('/:id',
+  function(request, response) {
     restaurant.getById(request.params.id, function(err, dbResult) {
       if (err) {
         response.json(err);
@@ -13,17 +22,12 @@ router.get('/:id?',
         response.json(dbResult[0]);
       }
     });
-  } else {
-    restaurant.get(function(err, dbResult) {
-      if (err) {
-        response.json(err);
-      } else {
-        response.json(dbResult);
-      }
-    });
-  }
 });
 
+router.get('/:id/menu', function(req, res) {
+  console.log(req.params.id)
+  res.send("ok")
+})
 
 router.post('/', 
 function(request, response) {

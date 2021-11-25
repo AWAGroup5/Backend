@@ -3,51 +3,61 @@ const router = express.Router();
 const product = require('../models/product_model');
 
 router.get('/',
-  function(request, response) {
-    var name = request.query.name;
-    product.getByName(name, function(err, dbResult) {
-      if (err) {
-        response.json(err);
-      } else {
-        console.log(dbResult[0]);
-        response.json(dbResult[0]);
-      }
-    }); 
+  function(req, res) {
+    var id = req.query.id;
+    if (id) {
+      product.getById(id, function(err, dbResult) {
+        if (err) {
+          res.json(err);
+        } else {
+          console.log(dbResult[0]);
+          res.json(dbResult[0]);
+        }
+      }); 
+    } else {
+      product.get(function(err, dbResult) {
+        if (err) {
+          res.json(err);
+        } else {
+          res.json(dbResult);
+        }
+      });
+    }
 });
 
 
 router.post('/', 
-function(request, response) {
-  product.add(request.body, function(err, dbResult) {
+function(req, res) {
+  product.add(req.body, function(err, dbResult) {
     if (err) {
-      response.json(err);
+      res.json(err);
     } else {
       console.log(dbResult);
-      response.json(dbResult);
+      res.json(dbResult);
     }
   });
 });
 
 
 router.delete('/:id', 
-function(request, response) {
-  product.delete(request.params.id, function(err, dbResult) {
+function(req, res) {
+  product.delete(req.params.id, function(err, dbResult) {
     if (err) {
-      response.json(err);
+      res.json(err);
     } else {
-      response.json(dbResult.affectedRows);
+      res.json(dbResult.affectedRows);
     }
   });
 });
 
 
 router.put('/:id', 
-function(request, response) {
-  product.update(request.params.id, request.body, function(err, dbResult) {
+function(req, res) {
+  product.update(req.params.id, req.body, function(err, dbResult) {
     if (err) {
-      response.json(err);
+      res.json(err);
     } else {
-      response.json(dbResult);
+      res.json(dbResult);
     }
   });
 });
