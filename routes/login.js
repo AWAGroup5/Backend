@@ -15,7 +15,7 @@ router.post('/customer', passport.authenticate('user', { session: false }), (req
   }
   const secretKey = (process.env.SECRET_KEY || "joulupukki");
   const options = {
-    expiresIn: '60s'
+    expiresIn: '1d'
   }
   const generatedToken = jwt.sign(payload, secretKey, options)
 
@@ -32,7 +32,7 @@ router.post('/manager', passport.authenticate('manager', { session: false }), (r
   }
   const secretKey = (process.env.SECRET_KEY || "joulupukki");
   const options = {
-    expiresIn: '30s'
+    expiresIn: '1d'
   }
   const generatedToken = jwt.sign(payload, secretKey, options)
 

@@ -2,16 +2,18 @@ const express = require('express');
 const router = express.Router();
 const category = require('../models/category_model');
 
-router.get('/:id?',
+router.get('/',
  function(req, res) {
-  if (req.params.id) {
-    category.getById(req.params.id, function(err, dbResult) {
+   console.log(req.query)
+  var id = req.query.id;
+  if (id) {
+    category.getById(id, function(err, dbResult) {
       if (err) {
         res.json(err);
-        res.send("No user on that id")
+        res.send("No category on that id")
       } else {
-        console.log(dbResult[0]);
-        res.json(dbResult[0]);
+        console.log(dbResult);
+        res.json(dbResult);
       }
     });
   } else {
