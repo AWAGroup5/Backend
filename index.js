@@ -38,8 +38,9 @@ var parser = multer({ storage: storage });
 app.post('/upload', parser.single('image'), function (req, res) {
   console.log(req.file);
   res.status(201);
-  res.json(req.file);
+  res.send(res);
 });
+
 
 app.listen(PORT, () => {
   console.log('Example app listening at' ,PORT);
