@@ -4,28 +4,27 @@ const category = require('../models/category_model');
 
 router.get('/',
  function(req, res) {
-   console.log(req.query)
-  var id = req.query.id;
-  if (id) {
-    category.getById(id, function(err, dbResult) {
-      if (err) {
-        res.json(err);
-        res.send("No category on that id")
-      } else {
-        console.log(dbResult);
-        res.json(dbResult);
-      }
-    });
-  } else {
-    category.get(function(err, dbResult) {
+  console.log(req.query)
+  category.get(function(err, dbResult) {
       if (err) {
         res.json(err);
       } else {
         res.json(dbResult);
       }
     });
-  }
 });
+
+router.get('/:id', function(req, res) {
+  category.getById(req.params.id, function(err, dbResult) {
+    if (err) {
+      res.json(err);
+      res.send("No category on that id")
+    } else {
+      console.log(dbResult);
+      res.json(dbResult);
+    }
+  });
+})
 
 router.post('/', 
 function(request, response) {
