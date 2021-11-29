@@ -18,7 +18,6 @@ router.get('/:id', function(req, res) {
   category.getById(req.params.id, function(err, dbResult) {
     if (err) {
       res.json(err);
-      res.send("No category on that id")
     } else {
       console.log(dbResult);
       res.json(dbResult);
