@@ -33,7 +33,6 @@ router.get('/:id/menu', function(req, res) {
     if (err) {
       res.json(err)
     } else {
-      console.log("Categoy amount: " + dbResult.length)
       for (let i=0; i<dbResult.length ; i++) {
         categories.push({ categoryName: dbResult[i].name, categoryId: dbResult[i].idcategory, products: [] })
         product.getById(dbResult[i].idcategory, function(err, productResult) {
@@ -43,7 +42,9 @@ router.get('/:id/menu', function(req, res) {
             const parsed = JSON.parse(JSON.stringify(productResult))
             for (let z=0; z<parsed.length; z++) {
               categories[i].products.push(parsed[z])
-              if (z === parsed.length -1 && i === dbResult.length -1) {
+              if (i === dbResult.length -1 && z === parsed.length -1) {
+                console.log("iffissä")
+                console.log(categories)
                 res.send(categories)
               }
             }
@@ -52,7 +53,6 @@ router.get('/:id/menu', function(req, res) {
       }
     }
   })
-  
 })
 
 router.post('/', 
