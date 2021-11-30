@@ -4,8 +4,11 @@ const orders = {
   get: function(callback) {
     return db.query('select * from orders', callback); //Select all orderss based on ID 
   },
-  getById: function(id, callback) {
-    return db.query('select * from orders where idorders=?', [id], callback); //selec the orders specifically based on ID 
+  getByCustomerId: function(id, callback) {
+    return db.query('select * from orders where idcustomer=?', [id], callback); //selec the orders specifically based on customer ID 
+  },
+  getByRestaurantId: function(id, callback) {
+    return db.query('select * from orders where idrestaurant=?', [id], callback); //selec the orders specifically based on restaurant ID 
   },
   add: function(orderss, callback) {
     return db.query(

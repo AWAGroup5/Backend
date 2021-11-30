@@ -1,8 +1,12 @@
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 const mysql = require('mysql');
 const connection = mysql.createPool({
-  host: 'eu-cdbr-west-01.cleardb.com',       
-  user: 'b1ea308d13f6db',
-  password: '55b0df08',
+  host: process.env.DB_HOST,       
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
   database: 'heroku_7bc01a9cd72ea84'
 });
 module.exports = connection;

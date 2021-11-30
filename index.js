@@ -15,6 +15,7 @@ require("./passport")(passport);
 
 dotenv.config();
 var app = express(); 
+app.use(cors());
 app.use(passport.initialize());
 
 var indexRouter = require ('./routes/index');
@@ -63,7 +64,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
-app.use(cors({ origin: '*' }))
 
 app.use('/', indexRouter);
 app.use('/customer', customerRouter);
