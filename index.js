@@ -4,14 +4,16 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var cloudinary = require('cloudinary');
+var cloudinary = require('cloudinary').v2;
 var multer = require('multer');
 var { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cors = require("cors");
+const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 require("./passport")(passport);
 
+dotenv.config();
 var app = express(); 
 app.use(passport.initialize());
 
@@ -26,6 +28,12 @@ var categoryRouter = require('./routes/category');
 
 var PORT = (process.env.PORT || 80);
 
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_KEY,
+  api_secret: process.env.CLOUD_SECRET,
+});
+
 var storage = new CloudinaryStorage ({
   cloudinary: cloudinary,
   folder: '',
@@ -36,7 +44,8 @@ var parser = multer({ storage: storage });
 
 app.post('/upload', parser.single('image'), async (req, res) => {
   console.log(req.file)
-  return res.json({ picture: req.file.path })
+  const path = req.file.path
+  res.send(path);
 });
 
 app.listen(PORT, () => {
