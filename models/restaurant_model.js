@@ -5,7 +5,7 @@ const restaurant = {
     return db.query('select * from restaurant', callback);
   },
   getById: function(id, callback) {
-    return db.query('select * from restaurant where idrestaurant=?', [id], callback); //to select a Name based on the restaurant ID
+    return db.query('select * from restaurant where idmanager=?', [id], callback); //to get all restaurants based on the manager ID
   },
 
   getProductsByCategory: function(id, callback) {
