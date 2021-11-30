@@ -34,13 +34,10 @@ var storage = new CloudinaryStorage ({
 
 var parser = multer({ storage: storage });
 
-
-app.post('/upload', parser.single('image'), function (req, res) {
-  console.log(req.file);
-  res.status(201);
-  res.send(res);
+app.post('/upload', parser.single('image'), async (req, res) => {
+  console.log(req.file)
+  return res.json({ picture: req.file.path })
 });
-
 
 app.listen(PORT, () => {
   console.log('Example app listening at' ,PORT);
