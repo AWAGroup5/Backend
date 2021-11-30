@@ -16,12 +16,12 @@ router.get('/', function(req, res) {
 
 router.get('/:id',
   function(req, res) {
-    restaurant.getProductsByCategory(req.params.id, function(err, dbResult) {
+    restaurant.getById(req.params.id, function(err, dbResult) {
       if (err) {
         res.json(err);
       } else {
-        console.log(dbResult[0]);
-        res.json(dbResult[0]);
+        console.log(dbResult);
+        res.json(dbResult);
       }
     });
 });
