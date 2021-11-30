@@ -15,8 +15,8 @@ const restaurant = {
 
   add: function(restaurant, callback) {  //Adding a new restaurant 
     return db.query(
-      'insert into restaurant (idrestaurant,idmanager,name,type,openInfo,priceLevel) values(?,?,?,?,?,?)',
-      [null, restaurant.idmanager, restaurant.name, restaurant.type, restaurant.openInfo, restaurant.priceLevel],
+      'insert into restaurant (idrestaurant,idmanager,name,type,openInfo,priceLevel,imageUrl) values(?,?,?,?,?,?,?)',
+      [null, restaurant.idmanager, restaurant.name, restaurant.type, restaurant.openInfo, restaurant.priceLevel, restaurant.imageUrl],
       callback
     );
   },

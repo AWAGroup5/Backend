@@ -12,8 +12,8 @@ const product = {
   },
   add: function(product, callback) {
     return db.query(
-      'insert into product (idproduct,idcategory,name,description,price) values(?,?,?,?,?)',
-      [null, product.idcategory, product.name, product.description, product.price],
+      'insert into product (idproduct,idcategory,name,description,price,imageUrl) values(?,?,?,?,?,?)',
+      [null, product.idcategory, product.name, product.description, product.price, product.imageUrl],
       callback
     );
   },
