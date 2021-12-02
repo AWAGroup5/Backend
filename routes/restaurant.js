@@ -34,19 +34,15 @@ router.get('/:id/menu', function(req, res) {
       res.json(err)
     } else {
       for (let i=0; i<dbResult.length ; i++) {
-        categories.push({ categoryName: dbResult[i].name, categoryId: dbResult[i].idcategory, products: [] })
         product.getById(dbResult[i].idcategory, function(err, productResult) {
           if (err) {
             res.json(err)
           } else {
-            const parsed = JSON.parse(JSON.stringify(productResult))
-            for (let z=0; z<parsed.length; z++) {
-              categories[i].products.push(parsed[z])
-              if (i === dbResult.length -1 && z === parsed.length -1) {
-                console.log("iffissä")
-                console.log(categories)
-                res.send(categories)
-              }
+            categories.push({ categoryName: dbResult[i].name, categoryId: dbResult[i].idcategory, products: productResult })
+            if (i === dbResult.length - 1) {
+              console.log("iffissä")
+              console.log(categories)
+              res.send(categories)
             }
           }
         })

@@ -4,27 +4,25 @@ const product = require('../models/product_model');
 
 router.get('/',
   function(req, res) {
-    var id = req.query.id;
-    if (id) {
-      product.getById(id, function(err, dbResult) {
-        if (err) {
-          res.json(err);
-        } else {
-          console.log(dbResult[0]);
-          res.json(dbResult[0]);
-        }
-      }); 
-    } else {
-      product.get(function(err, dbResult) {
-        if (err) {
-          res.json(err);
-        } else {
-          res.json(dbResult);
-        }
-      });
-    }
+    product.get(function(err, dbResult) {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json(dbResult);
+      }
+    });
 });
 
+router.get('/:id', function(req,res) {
+  product.getById(req.params.id, function(err, dbResult) {
+    if (err) {
+      res.json(err);
+    } else {
+      console.log(dbResult);
+      res.json(dbResult);
+    }
+  })
+})
 
 router.post('/', 
 function(req, res) {
