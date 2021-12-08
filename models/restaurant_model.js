@@ -8,10 +8,13 @@ const restaurant = {
     return db.query('select * from restaurant where idmanager=?', [id], callback); //to get all restaurants based on the manager ID
   },
 
+  getByRestaurantId: function(id, callback) {
+    return db.query('select * from restaurant where idrestaurant=?', [id], callback); //get restaurant info by id
+  },
+
   getProductsByCategory: function(id, callback) {
     return db.query('SELECT * FROM category INNER JOIN product ON category.idcategory = product.idcategory WHERE idrestaurant=?' [id], callback);
   },
-
 
   add: function(restaurant, callback) {  //Adding a new restaurant 
     return db.query(

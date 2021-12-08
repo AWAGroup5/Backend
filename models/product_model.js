@@ -7,6 +7,9 @@ const product = {
   getById: function(id, callback) {
     return db.query('select * from product where idcategory=?', [id], callback); //Select a products based on the category
   },
+  getByProductId: function(id, callback) {
+    return db.query('select * from product where idproduct=?', [id], callback);
+  },
   getByName: function(name, callback) {
     return db.query('select * from product where name=?', [name], callback); //Select a product based on the name
   },

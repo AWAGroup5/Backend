@@ -26,6 +26,18 @@ router.get('/customer/:id?',
   });
 });
 
+router.get('/products/:id?',
+  function(req, res) {
+  order.getByOrderId(req.params.id, function(err, dbResult) {
+    if (err) {
+      res.json(err);
+    } else {
+      console.log(dbResult);
+      res.json(dbResult);
+    }
+  });
+});
+
 router.get('/', function(req, res) {
   order.get(function(err, dbResult) {
     if (err) {
@@ -36,7 +48,7 @@ router.get('/', function(req, res) {
   });
 })
 
-router.post('/', 
+router.post('/',      //post the order
 function(req, res) {
   order.add(req.body, function(err, dbResult) {
     if (err) {
@@ -48,6 +60,17 @@ function(req, res) {
   });
 });
 
+router.post('/product/',      //post the orders products
+function(req, res) {
+  order.addProduct(req.body, function(err, dbResult) {
+    if (err) {
+      res.json(err);
+    } else {
+      console.log(dbResult);
+      res.json(dbResult);
+    }
+  });
+});
 
 router.delete('/:id', 
 function(req, res) {

@@ -10,12 +10,21 @@ const orders = {
   getByRestaurantId: function(id, callback) {
     return db.query('select * from orders where idrestaurant=?', [id], callback); //selec the orders specifically based on restaurant ID 
   },
+  getByOrderId: function(id, callback) {
+    return db.query('select * from quantity where idorder=?', [id], callback);
+  },
   add: function(orders, callback) {
     return db.query(
       'insert into orders (idorder,idcustomer,status,cost,address,idrestaurant) values(?,?,?,?,?,?)',  //Adding a new orders with needed information 
       [null, orders.idcustomer, orders.status, orders.cost, orders.address, orders.idrestaurant],
       callback
     );
+  },
+  addProduct: function(product, callback) {
+    return db.query(
+      'insert into quantity (quantity, idorder, idproduct) values(?,?,?)',
+      [product.quantity, product.idorder, product.idproduct], callback
+    )
   },
   delete: function(id, callback) {
     return db.query('delete from orders where idorder=?', [id], callback); //delete the orders based on the ID 

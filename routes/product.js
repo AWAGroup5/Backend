@@ -24,6 +24,17 @@ router.get('/:id', function(req,res) {
   })
 })
 
+router.get('/single/:id', function(req,res) {
+  product.getByProductId(req.params.id, function(err, dbResult) {
+    if (err) {
+      res.json(err);
+    } else {
+      console.log(dbResult[0]);
+      res.json(dbResult[0]);
+    }
+  })
+})
+
 router.post('/', 
 function(req, res) {
   product.add(req.body, function(err, dbResult) {

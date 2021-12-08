@@ -26,6 +26,18 @@ router.get('/:id',
     });
 });
 
+router.get('/single/:id',
+  function(req, res) {
+    restaurant.getByRestaurantId(req.params.id, function(err, dbResult) {
+      if (err) {
+        res.json(err);
+      } else {
+        console.log(dbResult[0]);
+        res.json(dbResult[0]);
+      }
+    });
+});
+
 router.get('/:id/menu', function(req, res) {
   console.log("restaurantId: " + req.params.id)
   let categories = new Array();
