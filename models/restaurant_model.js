@@ -18,8 +18,8 @@ const restaurant = {
 
   add: function(restaurant, callback) {  //Adding a new restaurant 
     return db.query(
-      'insert into restaurant (idrestaurant,idmanager,name,type,openInfo,priceLevel,imageUrl) values(?,?,?,?,?,?,?)',
-      [null, restaurant.idmanager, restaurant.name, restaurant.type, restaurant.openInfo, restaurant.priceLevel, restaurant.imageUrl],
+      'insert into restaurant (idrestaurant,idmanager,name,description,type,openInfo,priceLevel,imageUrl) values(?,?,?,?,?,?,?,?)',
+      [null, restaurant.idmanager, restaurant.name, restaurant.description, restaurant.type, restaurant.openInfo, restaurant.priceLevel, restaurant.imageUrl],
       callback
     );
   },
@@ -28,8 +28,8 @@ const restaurant = {
   },
   update: function(id, restaurant, callback) { //updating a restaurant based on ID 
     return db.query(
-      'update restaurant set idrestaurant=?,idmanager=?, name=?, type=?, openInfo=?, priceLevel=?, where idrestaurant=?',
-      [restaurant.idrestaurant, restaurant.idmanager, restaurant.name, restaurant.type, restaurant.openInfo, restaurant.priceLevel, id],
+      'update restaurant set idrestaurant=?,idmanager=?, name=?, description=?, type=?, openInfo=?, priceLevel=?, where idrestaurant=?',
+      [restaurant.idrestaurant, restaurant.idmanager, restaurant.name, restaurant.description, restaurant.type, restaurant.openInfo, restaurant.priceLevel, id],
       callback
     );
   }
