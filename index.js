@@ -18,7 +18,6 @@ var app = express();
 app.use(cors());
 app.use(passport.initialize());
 
-var indexRouter = require ('./routes/index');
 var restaurantRouter = require ('./routes/restaurant');
 var orderRouter = require ('./routes/order');
 var productRouter = require ('./routes/product');
@@ -49,6 +48,10 @@ app.post('/upload', parser.single('image'), async (req, res) => {
   res.send(path);
 });
 
+app.get('/', function(req,res) {
+  res.send("Welcome to server side of FoodApp")
+})
+
 app.listen(PORT, () => {
   console.log('Example app listening at' ,PORT);
 })
@@ -65,7 +68,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
-app.use('/', indexRouter);
 app.use('/customer', customerRouter);
 app.use('/manager', managerRouter);
 app.use('/restaurant', restaurantRouter);
